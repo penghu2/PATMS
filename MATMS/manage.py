@@ -2,6 +2,10 @@
 import os
 import sys
 
+import mimetypes
+mimetypes.init()
+mimetypes.types_map['.css'] = 'text/css'
+
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MATMS.settings")
 
