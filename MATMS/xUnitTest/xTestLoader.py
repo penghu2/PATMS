@@ -1,11 +1,11 @@
-#encoding=utf-8
 __author__ = 'penghu2'
 
 import os
-from xtestSuit import XTestSuit
+from xTestSuit import XTestSuit
 
 
 from unittest.loader import TestLoader
+from unittest.loader import _make_failed_load_tests
 from unittest.suite import TestSuite
 import unittest.case as case
 import unittest.suite as suite

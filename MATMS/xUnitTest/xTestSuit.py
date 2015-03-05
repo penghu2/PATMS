@@ -31,5 +31,3 @@ class XTestSuit(TestSuite):
     def desc(self, value):
         self.__desc = value
 
-
-
