@@ -2,7 +2,6 @@ __author__ = 'penghu2'
 
 from unittest.suite import TestSuite
 
-
 class XTestSuit(TestSuite):
     def __init__(self, tests=()):
         """

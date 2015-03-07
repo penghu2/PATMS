@@ -14,6 +14,7 @@ import unittest.suite as suite
 T_FILEPATH = 1
 T_TESTCASE = 2
 T_DIRPATH = 3
+T_MODULEONLY = 4
 
 class XTestLoader(TestLoader):
     suiteClass = XTestSuit
@@ -50,6 +51,8 @@ class XTestLoader(TestLoader):
             except Exception, e:
                 return _make_failed_load_tests(module.__name__, e,
                                                self.suiteClass)
+        tests.type = T_MODULEONLY
+        tests.desc = module.__name__
         return tests
 
 
@@ -113,7 +116,3 @@ def printSuit(xsuit):
         if isinstance(s, case.TestCase):
             print s.id()
 
-if __name__ == '__main__':
-    testloader = XTestLoader()
-    suits =  testloader.loadTestFromPath("E:/temp/test")
-    printSuit(suits)
