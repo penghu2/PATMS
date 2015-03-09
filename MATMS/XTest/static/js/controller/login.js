@@ -1,16 +1,7 @@
 /**
  * Created by stone on 2015/3/8.
  */
-$("#loginform").submit(function()
-{
-    alert("哈哈");
-    user=$("#usr1").val();
-    passwd=$("#pwd1").val();
-    login.confirm(user,passwd);
-    return false;
-});
-
-var login = function(){
+var loginItem = function(){
     function isEmail(strEmail){
         var emailReg = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
         if( emailReg.test(strEmail) ){
@@ -48,7 +39,7 @@ var login = function(){
         }
     }
 
-    function confirm(user,passwd)
+    this.submit = function(user,passwd)
     {
         $.post("../login",
            { username: user, password: passwd },
@@ -57,13 +48,12 @@ var login = function(){
               afterConfirm(data);
            },
            'json'
-
         );
-    }
+    };
 
     function afterConfirm(data)
     {
-        alert(data)
+        alert(data);
     }
 };
 

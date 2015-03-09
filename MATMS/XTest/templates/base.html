@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title>Dashboard - Ace Admin</title>
+		<meta name="description" content="overview & stats" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {% include 'common/basestyle.html' %}
+        {% block othercss %}
+        {% endblock %}
+	</head>
+	<body>
+        {% include 'common/navbar.html' %}
+        {% block container %}
+            {% include 'common/basecontainer.html' %}
+        {% endblock %}
+		<a href="#" id="btn-scroll-up" class="btn btn-small btn-inverse">
+			<i class="icon-double-angle-up icon-only"></i>
+		</a>
+        {% include 'common/basescript.html' %}
+	</body>
+</html>

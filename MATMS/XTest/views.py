@@ -1,3 +1,4 @@
+#encoding=utf-8
 from django.shortcuts import render
 
 # Create your views here.
@@ -11,6 +12,7 @@ from django.contrib.auth.models import User
 from rest_framework import viewsets
 from XTest.serializers import UserSerializer
 import logging
+from commons import JSONResponse
 
 logger = logging.getLogger('customapp.engine')
 
@@ -24,26 +26,37 @@ def custom_proc(request):
 
 @login_required(login_url="/ATMS/login/")
 def index(request):
-    return render_to_response('index.html',
+    return render_to_response('unittest.html',{'menuName':'测试管理', 'UserName':request.user.username},
+                            context_instance= RequestContext(request, processors=[custom_proc]))
+
+def temp(request):
+    return render_to_response('base.html',{'menuName':'测试管理'},
                             context_instance= RequestContext(request, processors=[custom_proc]))
 
 def login(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
-
+    next = request.GET.get('next',None)
     if username == '' or password == '':
         return render_to_response('login.html',
                   context_instance=RequestContext(request, processors=[custom_proc]))
-
+    print username, password
     user = auth.authenticate(username=username, password=password)
+    resp={}
     if user is not None and user.is_active:
         auth.login(request, user)
-        return HttpResponseRedirect("index")
+        #return HttpResponseRedirect("index")
+
+        resp['status'] = '0000'
+        if next is None:
+            next = '/ATMS/index'
+        resp['href']=next
+        return JSONResponse(resp)
 
     else:
-        resp = HttpResponse()
-        resp.write('username or password is wrong')
-        return resp
+        resp['status'] = '1001'
+        resp['href']='/ATMS/index'
+        return JSONResponse(resp)
 
 def logout(request):
     auth.logout(request)

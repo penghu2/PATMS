@@ -10,6 +10,8 @@ router.register(r'users', views.UserViewSet)
 urlpatterns = patterns('XTest.views',
                        url(r'^index.*','index', name='index'),
                        url(r'^login.*','login', name='login'),
+                       url(r'^logout.*','logout'),
+                       url(r'^temp.*','temp'),
                        url(r'^', include(router.urls)),
                      url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 )

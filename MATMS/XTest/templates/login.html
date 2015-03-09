@@ -6,6 +6,7 @@
 		<meta name="description" content="User login page" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<!-- basic styles -->
+        <link href="{{STATIC_URL}}css/additional.css" rel="stylesheet" />
 		<link href="{{STATIC_URL}}css/bootstrap.min.css" rel="stylesheet" />
 		<link href="{{STATIC_URL}}css/bootstrap-responsive.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css" />
@@ -20,7 +21,7 @@
 		<!--[if lt IE 9]>
 		  <link rel="stylesheet" href="{{STATIC_URL}}css/ace-ie.min.css" />
 		<![endif]-->
-        <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.11.2.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/util/ajaxsend.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/controller/login.js"></script>
 	</head>
@@ -46,19 +47,20 @@
 		 <div class="widget-main">
 			<h4 class="header lighter"><i class="icon-coffee green"></i> 测 试 管 理 平 台 登 陆</h4>
 			
-			<div class="space-6"></div>
-			
-			<form id="loginform">
+			<!--div class="space-6">用户名密码不正确!</div -->
+			<div class="space-error">用户名密码不正确!</div>
+			<form id="loginform"  method="post">
+                {% csrf_token %}
 				 <fieldset>
 					<label>
 						<span class="block input-icon input-icon-right">
-							<input type="text" class="span12" placeholder="Username" id="usr1"/>
+							<input name="username" type="text" class="span12" placeholder="Username" id="usr1"/>
 							<i class="icon-user"></i>
 						</span>
 					</label>
 					<label>
 						<span class="block input-icon input-icon-right">
-							<input type="password" class="span12" placeholder="Password" id="pwd1"/>
+							<input name="password" type="password" class="span12" placeholder="Password" id="pwd1"/>
 							<i class="icon-lock"></i>
 						</span>
 					</label>
@@ -202,11 +204,35 @@
 		<!-- inline scripts related to this page -->
 		
 		<script type="text/javascript">
+
 		
 function show_box(id) {
  $('.widget-box.visible').removeClass('visible');
  $('#'+id).addClass('visible');
 }
+
+$('#loginform').submit(function(){
+    $.ajax({
+                type : 'POST',
+                dataType : 'json',
+                data : $('#loginform').serialize(),
+                url : '/ATMS/login',
+                complete : function() {
+                  //  $.unblockUI();
+                } ,
+                success : function (r) {
+                    if ( r.status == '0000' ){
+                        location.href= r.href
+                    } else if (r.status == '1001') {
+                        $(".space-error").show();
+                    }
+                },
+                error : function () {
+                    alert('系统繁忙,请用电话与我们联系!');
+                }
+            });
+    return false;
+});
 
 		</script>
 	</body>
