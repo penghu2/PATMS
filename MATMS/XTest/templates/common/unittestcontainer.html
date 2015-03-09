@@ -1,4 +1,5 @@
 {% extends "common/basecontainer.html" %}
+
 {% block pagecontent %}
     <div class="row-fluid">
         <div class="alert alert-block alert-success">
@@ -12,20 +13,17 @@
             <div class="span6">
                 <div class="widget-box">
                     <div class="widget-header">
-                        <h4 class="lighter smaller">
-                            <i class="icon-comment blue"></i>
-                            TestCases
-                        </h4>
-                    </div>
+            <h4 class="lighter smaller"><i class="icon-comment blue"></i>Conversation</h4>
+        </div>
                     <div class="widget-body limit-height">
                         <div class="widget-main no-padding">
-                            <div class="slimScrollDiv">
-                                <div class="dialogs">
-                                hahha
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+                <div class="dialogs">
+                    <ul id="treeDemo" class="ztree"></ul>
+                </div>
+            </div>
+            <!--/widget-main-->
+                     </div>
                 </div>
             </div>
             <div class="span6">
