@@ -13,6 +13,7 @@ class XTestSuit(TestSuite):
         super(XTestSuit, self).__init__(tests)
         self.__type=None
         self.__desc=None
+        self.__name=None
 
     @property
     def type(self):
@@ -30,3 +31,10 @@ class XTestSuit(TestSuite):
     def desc(self, value):
         self.__desc = value
 
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, value):
+        self.__name = value

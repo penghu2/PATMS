@@ -10,6 +10,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from rest_framework import viewsets
+from rest_framework.decorators import api_view
 from XTest.serializers import UserSerializer
 import logging
 from commons import JSONResponse
@@ -33,6 +34,7 @@ def temp(request):
     return render_to_response('base.html',{'menuName':'测试管理'},
                             context_instance= RequestContext(request, processors=[custom_proc]))
 
+@api_view(http_method_names=['POST'])
 def login(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')

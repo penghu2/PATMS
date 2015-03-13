@@ -13,17 +13,17 @@
             <div class="span6">
                 <div class="widget-box">
                     <div class="widget-header">
-            <h4 class="lighter smaller"><i class="icon-comment blue"></i>Conversation</h4>
-        </div>
+                        <h4 class="lighter smaller"><i class="icon-comment blue"></i>Conversation</h4>
+                    </div>
                     <div class="widget-body limit-height">
                         <div class="widget-main no-padding">
 
-                <div class="dialogs">
-                    <ul id="treeDemo" class="ztree"></ul>
-                </div>
-            </div>
-            <!--/widget-main-->
-                     </div>
+                            <div class="dialogs">
+                                <ul id="treeDemo" class="ztree"></ul>
+                            </div>
+                        </div>
+                        <!--/widget-main-->
+                    </div>
                 </div>
             </div>
             <div class="span6">
@@ -36,10 +36,8 @@
                     </div>
                     <div class="widget-body limit-height">
                         <div class="widget-main no-padding">
-                            <div class="slimScrollDiv">
-                                <div class="dialogs">
-                                hahha
-                                </div>
+                            <div class="dialogs">
+                                <div id="testresultdiv"></div>
                             </div>
                         </div>
                     </div>
@@ -48,7 +46,10 @@
         </div>
         <hr>
         <div class="row-fluid">
-            <button class="btn btn-danger btn-block">Start  Test</button>
+            <button class="btn btn-danger btn-block" id="startTest">Start Test</button>
+        </div>
+        <div id="showMessage">
+
         </div>
     </div>
 {% endblock %}

@@ -11,10 +11,10 @@ import unittest.case as case
 import unittest.suite as suite
 
 
-T_FILEPATH = 1
-T_TESTCASE = 2
-T_DIRPATH = 3
-T_MODULEONLY = 4
+T_FILEPATH = 21
+T_TESTCASE = 3
+T_ROOTPATH = 1
+T_MODULEONLY = 2
 
 class XTestLoader(TestLoader):
     suiteClass = XTestSuit
@@ -30,6 +30,7 @@ class XTestLoader(TestLoader):
         loaded_suite = self.suiteClass(map(testCaseClass, testCaseNames))
         loaded_suite.type = T_TESTCASE
         loaded_suite.desc = testCaseClass.__name__
+        loaded_suite.name = (testCaseClass.__name__).split('.')[-1]+'.class'
         return loaded_suite
 
     def loadTestsFromModule(self, module, use_load_tests=True):
@@ -85,8 +86,7 @@ class XTestLoader(TestLoader):
                         module = __import__(parts[0])
                         moduleSuit = self.loadTestsFromModule(module)
                         if moduleSuit is not None:
-                            moduleSuit.type = T_FILEPATH
-                            moduleSuit.desc = f_path
+                            moduleSuit.name = f
                             tests.append(moduleSuit)
                     except ImportError:
                         continue
@@ -101,8 +101,9 @@ class XTestLoader(TestLoader):
         if len(tests)==0:
             return None
         dirSuit =  self.suiteClass(tests)
-        dirSuit.type = T_DIRPATH
+        dirSuit.type = T_ROOTPATH
         dirSuit.desc = path
+        dirSuit.name = path.split('/')[-1]
         return dirSuit
 
 

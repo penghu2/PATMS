@@ -10,6 +10,7 @@
         {% endblock %}
 	</head>
 	<body>
+        {% csrf_token %}
         {% include 'common/navbar.html' %}
         {% block container %}
             {% include 'common/basecontainer.html' %}
