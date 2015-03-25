@@ -6,7 +6,6 @@ from xTestSuit import XTestSuit
 
 from unittest.loader import TestLoader
 from unittest.loader import _make_failed_load_tests
-from unittest.suite import TestSuite
 import unittest.case as case
 import unittest.suite as suite
 
@@ -25,8 +24,15 @@ class XTestLoader(TestLoader):
             raise TypeError("Test cases should not be derived from TestSuite." \
                                 " Maybe you meant to derive from TestCase?")
         testCaseNames = self.getTestCaseNames(testCaseClass)
+        # if testCaseClass.__name__ == 'ITestCase':
+        #     return None
+
         if not testCaseNames and hasattr(testCaseClass, 'runTest'):
             testCaseNames = ['runTest']
+
+        if len(testCaseNames) == 0:
+            return None
+
         loaded_suite = self.suiteClass(map(testCaseClass, testCaseNames))
         loaded_suite.type = T_TESTCASE
         loaded_suite.desc = testCaseClass.__name__
@@ -39,7 +45,9 @@ class XTestLoader(TestLoader):
         for name in dir(module):
             obj = getattr(module, name)
             if isinstance(obj, type) and issubclass(obj, case.TestCase):
-                tests.append(self.loadTestsFromTestCase(obj))
+                test = self.loadTestsFromTestCase(obj)
+                if test is not None:
+                    tests.append(test)
 
         if len(tests) == 0:
             return None
@@ -73,22 +81,26 @@ class XTestLoader(TestLoader):
         basedir = path
         fllelist = os.listdir(path)
         for f in fllelist:
+            if f=='file' or f=='sql' or f=='utils' or f=='.svn' or f=='.idea':
+                continue
             f_path = os.path.join(basedir,f)
             if os.path.isfile(f_path):
                 if f.endswith("py"):
                     if (profix is not None) and (not f.startswith(profix)):
                         continue
-                    if f=='init.py':
+                    if f=='init.py' or f=='main.py' or f=='commons.py' or f=='test.py':
                         continue
 
                     parts = f.split('.')
                     try:
+
                         module = __import__(parts[0])
                         moduleSuit = self.loadTestsFromModule(module)
                         if moduleSuit is not None:
                             moduleSuit.name = f
                             tests.append(moduleSuit)
-                    except ImportError:
+                    except Exception, e:
+                        print e.message
                         continue
             elif os.path.isdir(f_path):
                 test = self.loadTestFromPath(f_path)
@@ -104,6 +116,9 @@ class XTestLoader(TestLoader):
         dirSuit.type = T_ROOTPATH
         dirSuit.desc = path
         dirSuit.name = path.split('/')[-1]
+        if dirSuit.name == '':
+            dirSuit.name = path.split('/')[-2]
+
         return dirSuit
 
 

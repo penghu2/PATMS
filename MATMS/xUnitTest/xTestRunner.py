@@ -26,9 +26,16 @@ class xTestRunner(TextTestRunner):
     resultclass = TextTestResult
 
     def __init__(self, stream, descriptions=True, verbosity=1,
-                 failfast=False, buffer=False, resultclass=None):
+                 failfast=False, buffer=False, resultclass=None, ifHtml=False):
         super(xTestRunner, self).__init__(stream, descriptions, verbosity,
                  failfast, buffer, resultclass)
 
-        self.stream = _WriteBrDecorator(stream)
+        if ifHtml:
+            self.stream = _WriteBrDecorator(stream)
 
+
+    def run(self, test):
+        if hasattr(test, 'stream'):
+            test.stream = self.stream
+
+        return super(xTestRunner, self).run(test)

@@ -1,4 +1,5 @@
 {%extends "base.html" %}
+
 {% block othercss %}
     <link rel="stylesheet" href="{{STATIC_URL}}css/zTreeStyle/zTreeStyle.css" />
 {% endblock %}
@@ -11,7 +12,7 @@
     <script type="text/javascript" src="{{STATIC_URL}}js/jquery-tree/jquery.ztree.core-3.5.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}js/jquery-tree/jquery.ztree.excheck-3.5.js"></script>
     <!--script type="text/javascript" src="{{STATIC_URL}}js/jquery-tree/jquery-1.4.4.min.js"></script-->
-    <script type="text/javascript" src="{{STATIC_URL}}js/controller/treecontrol.js"></script>
+    <!--script type="text/javascript" src="{{STATIC_URL}}js/controller/treecontrol.js"></script-->
     <SCRIPT type="text/javascript">
 		var setting = {
             check: {
@@ -34,5 +35,29 @@
         }
 
         initTree("treeDemo", 1,setting );
+
+        $("#startTest").click(function(){
+            var testtree = $.fn.zTree.getZTreeObj('treeDemo');
+            nodes = testtree.getCheckedNodes(true);
+            //alert(JSON.stringify(nodes));
+            $("#testresultdiv").html("update.....");
+            $.post('/ATMS/UnitTest/detial/1/',
+                {'checkTree':JSON.stringify(nodes)},
+                function(result)
+                {
+                    if(result.status=='0000'){
+                        var text = result.data;
+                        $("#testresultdiv").html(text);
+                    }
+                    else
+                    {
+                        var text = result.data;
+                        $("#testresultdiv").html('<p>'+text+'</p>');
+                    }
+                },
+                'json'
+            );
+
+        });
 	</SCRIPT>
 {% endblock %}

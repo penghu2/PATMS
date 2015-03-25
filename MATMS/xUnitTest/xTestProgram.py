@@ -46,12 +46,13 @@ class xTestProgram(object):
             sys.exit(not self.result.wasSuccessful())
         pass
 
-    def runTestSuit(self, suit):
+    def runTestSuit(self, suit, ifHtml=False):
         if isinstance(self.testRunner, (type, types.ClassType)):
             try:
                 testRunner = self.testRunner(verbosity=self.verbosity,
                                              failfast=self.failfast,
-                                             stream=self.stream)
+                                             stream=self.stream,
+                                             ifHtml=ifHtml)
             except TypeError:
                 # didn't accept the verbosity, buffer or failfast arguments
                 testRunner = self.testRunner()

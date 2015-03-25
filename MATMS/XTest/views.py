@@ -34,7 +34,7 @@ def temp(request):
     return render_to_response('base.html',{'menuName':'测试管理'},
                             context_instance= RequestContext(request, processors=[custom_proc]))
 
-@api_view(http_method_names=['POST'])
+@api_view(http_method_names=['POST','GET'])
 def login(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
