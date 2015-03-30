@@ -22,7 +22,7 @@ class TestManager(object):
 
     def loadsuit(self, key):
         xloder = xTestLoader.XTestLoader()
-        testsuit = xloder.loadTestFromPath('E:/temp/temp')
+        testsuit = xloder.loadTestFromPath('F:/python/TestPro/')
         return testsuit
 
     def addSuit(self, key, suit):
@@ -36,7 +36,7 @@ class TestManager(object):
 
     def runSuit(self, suit, key):
         testDriver = xTestProgram.xTestProgram(stream=self.getBuffStream(key))
-        return testDriver.runTestSuit(suit)
+        return testDriver.runTestSuit(suit, ifHtml=True)
 
     def readBuffer(self, key):
         if self.bufferStream[key] is not None:

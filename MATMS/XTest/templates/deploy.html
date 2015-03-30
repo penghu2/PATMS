@@ -1,0 +1,40 @@
+{%extends "base.html" %}
+
+{% block othercss %}
+
+{% endblock %}
+
+{% block container %}
+    {% include "common/deploycontainer.html" %}
+{% endblock %}
+
+{% block basescripts %}
+    {{ block.super }}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dataTables.bootstrap.js"></script>
+{% endblock %}
+
+{% block othertailjs %}
+    <script type="text/javascript">
+		$(function() {
+	var oTable1 = $('#table_report').dataTable( {
+	"aoColumns": [
+      { "bSortable": false },
+      null, null,null, null, null,
+	  { "bSortable": false }
+	] } );
+
+
+	$('table th input:checkbox').on('click' , function(){
+		var that = this;
+		$(this).closest('table').find('tr > td:first-child input:checkbox')
+		.each(function(){
+			this.checked = that.checked;
+			$(this).closest('tr').toggleClass('selected');
+		});
+
+	});
+	$('[data-rel=tooltip]').tooltip();
+})
+		</script>
+{% endblock %}

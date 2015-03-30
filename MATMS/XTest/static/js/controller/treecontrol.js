@@ -17,23 +17,3 @@ var TestTree = function(treeName){
     };
 
 };
-
-
-$("#startTest").click(function(){
-    var testtree = new TestTree('treeDemo');
-    var nodes = testtree.getSelectTree();
-    //alert(JSON.stringify(nodes));
-    $("#testresultdiv").html("update.....");
-    $.post('/ATMS/UnitTest/detial/1/',
-        nodes,
-        function(result)
-        {
-            if(result.status=='0000'){
-                var text = result.data;
-                $("#testresultdiv").html(text);
-            }
-        },
-        'json'
-    );
-
-});

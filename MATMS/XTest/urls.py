@@ -14,6 +14,9 @@ urlpatterns = patterns('XTest.views',
                        url(r'^login.*','login', name='login'),
                        url(r'^logout.*','logout'),
                        url(r'^temp.*','temp'),
+
+                       url(r'^deploy/.*', 'deploy'),
+
                      url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 )
 
