@@ -17,6 +17,7 @@ from commons import JSONResponse
 logger = logging.getLogger('customapp.engine')
 
 from XTest.models import DepProject
+from XTest.models import ProjectItems
 
 def custom_proc(request):
     "A context processor that provides 'app', 'user' and 'ip_address'."
@@ -39,6 +40,12 @@ def deploy(request):
                                               'projs':projects},
                               context_instance =  RequestContext(request, processors=[custom_proc]))
 
+
+def items(request):
+    pid = request.POST.get('pid','1')
+    items = ProjectItems.objects.filter(proId=int(pid))
+    return render_to_response('Fragment/proitemstable.html', {'itms':items},
+                              context_instance =  RequestContext(request, processors=[custom_proc]))
 
 def temp(request):
     return render_to_response('base.html',{'columnName':'测试管理'},

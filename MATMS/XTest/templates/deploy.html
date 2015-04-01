@@ -35,6 +35,18 @@
 
 	});
 	$('[data-rel=tooltip]').tooltip();
-})
+});
+
+    function listItems(obj){
+        var id = $(obj).attr('pid');
+        $.post("/ATMS/qitems/",
+           { "pid": id },
+           function(res){
+               $('#tablebase').html(res);
+           },
+           'html'
+        );
+        return false;
+    }
 		</script>
 {% endblock %}

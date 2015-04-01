@@ -29,6 +29,7 @@ class ProjectItems(models.Model):
     updateTime = models.DateTimeField(default=None, blank=True)
     createTime = models.DateTimeField(default=None, blank=True)
 
+
     def __unicode__(self):
         return u'%s_%s' % (self.name, self.desc)
 
